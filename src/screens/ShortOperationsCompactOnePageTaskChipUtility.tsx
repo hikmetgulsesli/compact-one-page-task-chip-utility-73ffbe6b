@@ -7,7 +7,9 @@
 // 3. Wire interactive controls through the typed actions prop
 // 4. Replace placeholder data with props/state
 
+import { useState } from "react";
 import { BadgeHelp, Bell, Check, CircleAlert, CircleHelp, Download, History, LayoutDashboard, Menu, Pencil, Plus, RefreshCw, Search, Settings, Trash2, TriangleAlert, User } from "lucide-react";
+import { setSearchQuery, clearSearchQuery } from "../features/surf-short-operations/act_search_records";
 
 
 export type ShortOperationsCompactOnePageTaskChipUtilityActionId = "notifications-1" | "help-outline-2" | "new-task-3" | "menu-4" | "export-json-5" | "clear-cache-6" | "retry-load-7" | "all-8" | "active-9" | "done-10" | "edit-11" | "operations-1" | "editor-2" | "settings-3" | "recovery-4";
@@ -18,6 +20,21 @@ export interface ShortOperationsCompactOnePageTaskChipUtilityProps {
 }
 
 export function ShortOperationsCompactOnePageTaskChipUtility({ actions }: ShortOperationsCompactOnePageTaskChipUtilityProps) {
+  const [search, setSearch] = useState("");
+  const [filter, setFilter] = useState<"all" | "active" | "done">("all");
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+    setSearchQuery(e.target.value);
+  };
+
+  const handleFilter = (f: "all" | "active" | "done") => {
+    setFilter(f);
+    if (f === 'all') actions?.["all-8"]?.();
+    if (f === 'active') actions?.["active-9"]?.();
+    if (f === 'done') actions?.["done-10"]?.();
+  };
+
   return (
     <>
       {/* TopAppBar */}
@@ -29,7 +46,7 @@ export function ShortOperationsCompactOnePageTaskChipUtility({ actions }: ShortO
       {/* Search Bar (on_left configuration) */}
       <div className="relative hidden sm:block w-64">
       <Search className="absolute left-2 top-1/2 -translate-y-1/2 text-outline text-[16px]" aria-hidden={true} focusable="false" />
-      <input className="w-full h-[28px] pl-7 pr-2 bg-surface-container-low border border-outline-variant rounded text-on-surface font-body-sm text-body-sm focus:border-primary focus:ring-2 focus:ring-primary-fixed-dim focus:outline-none transition-colors placeholder:text-outline" data-action="ACT_SEARCH_RECORDS" placeholder="Search operations..." type="text" />
+      <input className="w-full h-[28px] pl-7 pr-2 bg-surface-container-low border border-outline-variant rounded text-on-surface font-body-sm text-body-sm focus:border-primary focus:ring-2 focus:ring-primary-fixed-dim focus:outline-none transition-colors placeholder:text-outline" data-action="ACT_SEARCH_RECORDS" placeholder="Search operations..." type="text" value={search} onChange={handleSearchChange} />
       </div>
       {/* Trailing Icon Actions */}
       <button className="w-8 h-8 flex items-center justify-center rounded hover:bg-surface-container transition-colors text-on-surface-variant hover:text-primary duration-150 ease-in-out" type="button" aria-label="Notifications" data-action-id="notifications-1" onClick={actions?.["notifications-1"]}>
@@ -114,9 +131,9 @@ export function ShortOperationsCompactOnePageTaskChipUtility({ actions }: ShortO
       </div>
       {/* Status Filters */}
       <div className="flex gap-xs bg-surface-container-low p-[2px] rounded border border-outline-variant">
-      <button className="px-sm py-xs text-primary font-body-sm text-body-sm font-bold bg-white rounded shadow-sm" type="button" data-action-id="all-8" onClick={actions?.["all-8"]}>All</button>
-      <button className="px-sm py-xs text-on-surface-variant hover:text-on-surface font-body-sm text-body-sm rounded" type="button" data-action-id="active-9" onClick={actions?.["active-9"]}>Active</button>
-      <button className="px-sm py-xs text-on-surface-variant hover:text-on-surface font-body-sm text-body-sm rounded" type="button" data-action-id="done-10" onClick={actions?.["done-10"]}>Done</button>
+      <button className={`px-sm py-xs font-body-sm text-body-sm rounded ${filter === 'all' ? 'text-primary font-bold bg-white shadow-sm' : 'text-on-surface-variant hover:text-on-surface'}`} type="button" data-action-id="all-8" onClick={() => handleFilter('all')}>All</button>
+      <button className={`px-sm py-xs font-body-sm text-body-sm rounded ${filter === 'active' ? 'text-primary font-bold bg-white shadow-sm' : 'text-on-surface-variant hover:text-on-surface'}`} type="button" data-action-id="active-9" onClick={() => handleFilter('active')}>Active</button>
+      <button className={`px-sm py-xs font-body-sm text-body-sm rounded ${filter === 'done' ? 'text-primary font-bold bg-white shadow-sm' : 'text-on-surface-variant hover:text-on-surface'}`} type="button" data-action-id="done-10" onClick={() => handleFilter('done')}>Done</button>
       </div>
       </div>
       {/* Summary Metrics Bar */}

@@ -1,4 +1,4 @@
-import { useEffect, type ComponentType } from 'react';
+import { useEffect, useMemo, type ComponentType } from 'react';
 import {
   AppShellProvider,
   useAppShell,
@@ -9,8 +9,17 @@ import {
   SettingsAndPreferencesCompactOnePageTaskChipUtility,
   ShortEditorCompactOnePageTaskChipUtility,
   ShortOperationsCompactOnePageTaskChipUtility,
+  type ShortEditorCompactOnePageTaskChipUtilityActionId,
+  type ShortOperationsCompactOnePageTaskChipUtilityActionId,
 } from './screens';
 import type { AppSurfaceId } from './features/compact-one-page-task-chip-utility/compact-one-page-task-chip-utility.types';
+import { actSaveRecord, clearSaveRecordDraft, setSaveRecordDraft } from './features/surf-short-editor/act_save_record';
+import { actCancelEdit } from './features/surf-short-editor/act_cancel_edit';
+import { actCreateRecord } from './features/surf-short-operations/act_create_record';
+import { actSelectRecord } from './features/surf-short-operations/act_select_record';
+import { actRetryLoad } from './features/surf-short-operations/act_retry_load';
+import { clearSearchQuery, setSearchQuery } from './features/surf-short-operations/act_search_records';
+import type { AppShellSnapshot } from './features/compact-one-page-task-chip-utility/compact-one-page-task-chip-utility.types';
 
 /**
  * App shell.
@@ -29,9 +38,83 @@ import type { AppSurfaceId } from './features/compact-one-page-task-chip-utility
 
 type SurfaceComponent = ComponentType<Record<string, never>>;
 
+/**
+ * Short Operations surface wrapper.
+ * Wires the generated actions prop to the shared app shell.
+ */
+function ShortOperationsSurface(): JSX.Element {
+  const shell = useAppShell();
+  const actions = useMemo<Partial<Record<ShortOperationsCompactOnePageTaskChipUtilityActionId, () => void>>>(
+    () => ({
+      'notifications-1': () => shell.navigateToSurface('short-operations'),
+      'help-outline-2': () => shell.navigateToSurface('short-operations'),
+      'new-task-3': () => actCreateRecord(shell),
+      'menu-4': () => shell.navigateToSurface('short-operations'),
+      'export-json-5': () => {
+        const blob = new Blob([JSON.stringify(shell.tasks, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'tasks.json';
+        a.click();
+        URL.revokeObjectURL(url);
+      },
+      'clear-cache-6': () => shell.clearCache(),
+      'retry-load-7': () => actRetryLoad(shell),
+      'all-8': () => shell.setActivePanel('all'),
+      'active-9': () => shell.setActivePanel('active'),
+      'done-10': () => shell.setActivePanel('done'),
+      'edit-11': () => {
+        const id = shell.selectedRecordId;
+        if (id) actSelectRecord(shell, id, { navigateToEditor: true });
+      },
+      'operations-1': () => shell.navigateToSurface('short-operations'),
+      'editor-2': () => shell.navigateToSurface('short-editor'),
+      'settings-3': () => shell.navigateToSurface('settings-and-preferences'),
+      'recovery-4': () => shell.navigateToSurface('empty-and-error-recovery'),
+    }),
+    [shell],
+  );
+  return <ShortOperationsCompactOnePageTaskChipUtility actions={actions} />;
+}
+
+/**
+ * Short Editor surface wrapper.
+ * Wires the generated actions prop to the shared app shell.
+ */
+function ShortEditorSurface(): JSX.Element {
+  const shell = useAppShell();
+  const actions = useMemo<Partial<Record<ShortEditorCompactOnePageTaskChipUtilityActionId, () => void>>>(
+    () => ({
+      'export-json-1': () => {
+        const blob = new Blob([JSON.stringify(shell.tasks, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'tasks.json';
+        a.click();
+        URL.revokeObjectURL(url);
+      },
+      'menu-2': () => shell.navigateToSurface('short-operations'),
+      'notifications-3': () => shell.navigateToSurface('short-operations'),
+      'help-outline-4': () => shell.navigateToSurface('short-operations'),
+      'new-task-5': () => shell.navigateToSurface('short-editor'),
+      'cancel-6': () => actCancelEdit(shell),
+      'save-task-7': () => actSaveRecord(shell),
+      'operations-1': () => shell.navigateToSurface('short-operations'),
+      'editor-2': () => shell.navigateToSurface('short-editor'),
+      'settings-3': () => shell.navigateToSurface('settings-and-preferences'),
+      'recovery-4': () => shell.navigateToSurface('empty-and-error-recovery'),
+      'clear-cache-5': () => shell.clearCache(),
+    }),
+    [shell],
+  );
+  return <ShortEditorCompactOnePageTaskChipUtility actions={actions} />;
+}
+
 const SURFACE_COMPONENTS: Record<AppSurfaceId, SurfaceComponent> = {
-  'short-operations': ShortOperationsCompactOnePageTaskChipUtility as unknown as SurfaceComponent,
-  'short-editor': ShortEditorCompactOnePageTaskChipUtility as unknown as SurfaceComponent,
+  'short-operations': ShortOperationsSurface as unknown as SurfaceComponent,
+  'short-editor': ShortEditorSurface as unknown as SurfaceComponent,
   'settings-and-preferences': SettingsAndPreferencesCompactOnePageTaskChipUtility as unknown as SurfaceComponent,
   'empty-and-error-recovery': EmptyAndErrorRecoveryCompactOnePageTaskChipUtility as unknown as SurfaceComponent,
 };

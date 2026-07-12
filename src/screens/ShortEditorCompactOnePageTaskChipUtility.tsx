@@ -7,7 +7,9 @@
 // 3. Wire interactive controls through the typed actions prop
 // 4. Replace placeholder data with props/state
 
+import { useState } from "react";
 import { Bell, ChevronDown, CircleAlert, CircleHelp, History, LayoutDashboard, Menu, Pencil, Save, Settings, Trash2 } from "lucide-react";
+import { setSaveRecordDraft } from "../features/surf-short-editor/act_save_record";
 
 
 export type ShortEditorCompactOnePageTaskChipUtilityActionId = "export-json-1" | "menu-2" | "notifications-3" | "help-outline-4" | "new-task-5" | "cancel-6" | "save-task-7" | "operations-1" | "editor-2" | "settings-3" | "recovery-4" | "clear-cache-5";
@@ -18,6 +20,32 @@ export interface ShortEditorCompactOnePageTaskChipUtilityProps {
 }
 
 export function ShortEditorCompactOnePageTaskChipUtility({ actions }: ShortEditorCompactOnePageTaskChipUtilityProps) {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [priority, setPriority] = useState("p1");
+  const [status, setStatus] = useState("todo");
+
+  const handleSave = () => {
+    setSaveRecordDraft({ title, description });
+    actions?.["save-task-7"]?.();
+  };
+
+  const handleCancel = () => {
+    setTitle("");
+    setDescription("");
+    actions?.["cancel-6"]?.();
+  };
+
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(e.target.value);
+    setSaveRecordDraft({ title: e.target.value, description });
+  };
+
+  const handleDescChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setDescription(e.target.value);
+    setSaveRecordDraft({ title, description: e.target.value });
+  };
+
   return (
     <>
       {/* SideNavBar (Shared Component) */}
@@ -109,7 +137,7 @@ export function ShortEditorCompactOnePageTaskChipUtility({ actions }: ShortEdito
       <span>Task Title <span className="text-error">*</span></span>
       </label>
       {/* Error state active: border-error */}
-      <input className="w-full h-[32px] px-sm bg-surface-container-lowest border border-error rounded font-body-md text-body-md text-on-surface placeholder:text-outline-variant input-error-ring" id="task-title" placeholder="Enter a descriptive title..." type="text" defaultValue="" />
+      <input className="w-full h-[32px] px-sm bg-surface-container-lowest border border-error rounded font-body-md text-body-md text-on-surface placeholder:text-outline-variant input-error-ring" id="task-title" placeholder="Enter a descriptive title..." type="text" value={title} onChange={handleTitleChange} />
       <div className="flex items-center gap-xs text-error mt-[2px]">
       <CircleAlert className="text-[14px]" aria-hidden={true} focusable="false" />
       <span className="font-body-sm text-body-sm">Title is required to save this task.</span>
@@ -121,7 +149,7 @@ export function ShortEditorCompactOnePageTaskChipUtility({ actions }: ShortEdito
       <span>Description</span>
       <span className="text-outline-variant font-body-sm normal-case tracking-normal font-normal">Optional</span>
       </label>
-      <textarea className="w-full p-sm bg-surface-container-lowest border border-outline-variant rounded font-body-md text-body-md text-on-surface placeholder:text-outline-variant input-focus-ring resize-y min-h-[64px]" id="task-desc" placeholder="Add technical details, acceptance criteria, or context..." rows={3}></textarea>
+      <textarea className="w-full p-sm bg-surface-container-lowest border border-outline-variant rounded font-body-md text-body-md text-on-surface placeholder:text-outline-variant input-focus-ring resize-y min-h-[64px]" id="task-desc" placeholder="Add technical details, acceptance criteria, or context..." rows={3} value={description} onChange={handleDescChange}></textarea>
       </div>
       {/* Row 3: Priority & Status Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-md">
@@ -168,10 +196,10 @@ export function ShortEditorCompactOnePageTaskChipUtility({ actions }: ShortEdito
       <div className="h-[1px] w-full bg-outline-variant my-xs"></div>
       {/* Footer Actions */}
       <div className="flex justify-end gap-sm pt-xs">
-      <button className="h-[32px] px-lg bg-surface-container-lowest border border-outline-variant text-on-surface font-heading-sm text-heading-sm rounded hover:bg-surface-variant transition-colors flex items-center justify-center" type="button" data-action-id="cancel-6" onClick={actions?.["cancel-6"]}>
+      <button className="h-[32px] px-lg bg-surface-container-lowest border border-outline-variant text-on-surface font-heading-sm text-heading-sm rounded hover:bg-surface-variant transition-colors flex items-center justify-center" type="button" data-action-id="cancel-6" onClick={handleCancel}>
                                       Cancel
                                   </button>
-      <button className="h-[32px] px-lg bg-primary text-on-primary font-heading-sm text-heading-sm rounded hover:bg-primary-container transition-colors flex items-center justify-center gap-xs shadow-sm" type="button" data-action-id="save-task-7" onClick={actions?.["save-task-7"]}>
+      <button className="h-[32px] px-lg bg-primary text-on-primary font-heading-sm text-heading-sm rounded hover:bg-primary-container transition-colors flex items-center justify-center gap-xs shadow-sm" type="button" data-action-id="save-task-7" onClick={handleSave}>
       <Save className="text-[16px]" aria-hidden={true} focusable="false" />
                                       Save Task
                                   </button>
