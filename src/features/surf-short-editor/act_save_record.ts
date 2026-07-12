@@ -39,16 +39,36 @@ export function clearSaveRecordDraft(): void {
 }
 
 /**
- * Persist the current draft as a new task through the shared shell.
- * Returns the created record (with generated id) or `null` on rejection.
+ * Persist the current draft. When the shell already has a selected record
+ * this updates that record in place; otherwise it creates a new task.
+ * Returns the affected record on success or `null` on rejection.
+ *
+ * On success the module-level draft is cleared and the shell is
+ * navigated back to the operations surface so the user can see the
+ * change reflected in the list.
  */
 export function actSaveRecord(shell: AppShellState): TaskRecord | null {
+  if (shell.selectedRecordId) {
+    const ok = shell.updateTask(shell.selectedRecordId, {
+      title: draft.title,
+      description: draft.description,
+    });
+    if (ok) {
+      clearSaveRecordDraft();
+      shell.navigateToSurface('short-operations');
+      return (
+        shell.tasks.find((t) => t.id === shell.selectedRecordId) ?? null
+      );
+    }
+    return null;
+  }
   const result = shell.addTask({
     title: draft.title,
     description: draft.description,
   });
   if (result) {
     clearSaveRecordDraft();
+    shell.navigateToSurface('short-operations');
   }
   return result;
 }
@@ -64,9 +84,25 @@ export function actSaveRecordFrom(
 ): TaskRecord | null {
   const previous = draft;
   draft = { title: input.title, description: input.description };
+  if (shell.selectedRecordId) {
+    const ok = shell.updateTask(shell.selectedRecordId, {
+      title: input.title,
+      description: input.description,
+    });
+    if (ok) {
+      clearSaveRecordDraft();
+      shell.navigateToSurface('short-operations');
+      return (
+        shell.tasks.find((t) => t.id === shell.selectedRecordId) ?? null
+      );
+    }
+    draft = previous;
+    return null;
+  }
   const result = shell.addTask({ title: input.title, description: input.description });
   if (result) {
     clearSaveRecordDraft();
+    shell.navigateToSurface('short-operations');
   } else {
     draft = previous;
   }

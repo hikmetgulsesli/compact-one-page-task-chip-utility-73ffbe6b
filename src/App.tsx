@@ -39,6 +39,21 @@ import type { AppShellSnapshot } from './features/compact-one-page-task-chip-uti
 type SurfaceComponent = ComponentType<Record<string, never>>;
 
 /**
+ * Download the shell's current task list as a JSON file. Shared by every
+ * surface that exposes the "Export JSON" action so the file format and
+ * cleanup of the temporary object URL stay in lockstep.
+ */
+function exportTasksToJson(shell: AppShellState): void {
+  const blob = new Blob([JSON.stringify(shell.tasks, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'tasks.json';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+/**
  * Short Operations surface wrapper.
  * Wires the generated actions prop to the shared app shell.
  */
@@ -50,15 +65,7 @@ function ShortOperationsSurface(): JSX.Element {
       'help-outline-2': () => shell.navigateToSurface('short-operations'),
       'new-task-3': () => actCreateRecord(shell),
       'menu-4': () => shell.navigateToSurface('short-operations'),
-      'export-json-5': () => {
-        const blob = new Blob([JSON.stringify(shell.tasks, null, 2)], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'tasks.json';
-        a.click();
-        URL.revokeObjectURL(url);
-      },
+      'export-json-5': () => exportTasksToJson(shell),
       'clear-cache-6': () => shell.clearCache(),
       'retry-load-7': () => actRetryLoad(shell),
       'all-8': () => shell.setActivePanel('all'),
@@ -86,19 +93,16 @@ function ShortEditorSurface(): JSX.Element {
   const shell = useAppShell();
   const actions = useMemo<Partial<Record<ShortEditorCompactOnePageTaskChipUtilityActionId, () => void>>>(
     () => ({
-      'export-json-1': () => {
-        const blob = new Blob([JSON.stringify(shell.tasks, null, 2)], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'tasks.json';
-        a.click();
-        URL.revokeObjectURL(url);
-      },
+      'export-json-1': () => exportTasksToJson(shell),
       'menu-2': () => shell.navigateToSurface('short-operations'),
       'notifications-3': () => shell.navigateToSurface('short-operations'),
       'help-outline-4': () => shell.navigateToSurface('short-operations'),
-      'new-task-5': () => shell.navigateToSurface('short-editor'),
+      'new-task-5': () => {
+        // Clear the selected record so the editor opens empty rather than
+        // prefilled with the previously selected task's values.
+        shell.selectRecord(null);
+        shell.navigateToSurface('short-editor');
+      },
       'cancel-6': () => actCancelEdit(shell),
       'save-task-7': () => actSaveRecord(shell),
       'operations-1': () => shell.navigateToSurface('short-operations'),

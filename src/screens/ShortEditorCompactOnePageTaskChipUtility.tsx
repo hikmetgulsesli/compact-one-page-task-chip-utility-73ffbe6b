@@ -7,9 +7,10 @@
 // 3. Wire interactive controls through the typed actions prop
 // 4. Replace placeholder data with props/state
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Bell, ChevronDown, CircleAlert, CircleHelp, History, LayoutDashboard, Menu, Pencil, Save, Settings, Trash2 } from "lucide-react";
 import { setSaveRecordDraft } from "../features/surf-short-editor/act_save_record";
+import { useAppShell } from "../features/compact-one-page-task-chip-utility/compact-one-page-task-chip-utility.store";
 
 
 export type ShortEditorCompactOnePageTaskChipUtilityActionId = "export-json-1" | "menu-2" | "notifications-3" | "help-outline-4" | "new-task-5" | "cancel-6" | "save-task-7" | "operations-1" | "editor-2" | "settings-3" | "recovery-4" | "clear-cache-5";
@@ -20,10 +21,23 @@ export interface ShortEditorCompactOnePageTaskChipUtilityProps {
 }
 
 export function ShortEditorCompactOnePageTaskChipUtility({ actions }: ShortEditorCompactOnePageTaskChipUtilityProps) {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  const shell = useAppShell();
+  const selectedTask = shell.tasks.find((t) => t.id === shell.selectedRecordId);
+  const [title, setTitle] = useState(selectedTask?.title ?? "");
+  const [description, setDescription] = useState(selectedTask?.description ?? "");
   const [priority, setPriority] = useState("p1");
   const [status, setStatus] = useState("todo");
+
+  // Sync local form state when the user picks a different record to edit
+  // (or navigates away from any record). Without this, the editor would
+  // keep showing the previous draft even after the selectedRecordId
+  // changes.
+  useEffect(() => {
+    setTitle(selectedTask?.title ?? "");
+    setDescription(selectedTask?.description ?? "");
+  }, [shell.selectedRecordId, selectedTask]);
+
+  const titleIsEmpty = title.trim().length === 0;
 
   const handleSave = () => {
     setSaveRecordDraft({ title, description });
@@ -137,11 +151,13 @@ export function ShortEditorCompactOnePageTaskChipUtility({ actions }: ShortEdito
       <span>Task Title <span className="text-error">*</span></span>
       </label>
       {/* Error state active: border-error */}
-      <input className="w-full h-[32px] px-sm bg-surface-container-lowest border border-error rounded font-body-md text-body-md text-on-surface placeholder:text-outline-variant input-error-ring" id="task-title" placeholder="Enter a descriptive title..." type="text" value={title} onChange={handleTitleChange} />
+      <input className={`w-full h-[32px] px-sm bg-surface-container-lowest border rounded font-body-md text-body-md text-on-surface placeholder:text-outline-variant ${titleIsEmpty ? "border-error input-error-ring" : "border-outline-variant input-focus-ring"}`} id="task-title" placeholder="Enter a descriptive title..." type="text" value={title} onChange={handleTitleChange} />
+      {titleIsEmpty && (
       <div className="flex items-center gap-xs text-error mt-[2px]">
       <CircleAlert className="text-[14px]" aria-hidden={true} focusable="false" />
       <span className="font-body-sm text-body-sm">Title is required to save this task.</span>
       </div>
+      )}
       </div>
       {/* Row 2: Description (Optional) */}
       <div className="flex flex-col gap-xs">

@@ -20,6 +20,7 @@ export interface CancelEditResult {
 
 export function actCancelEdit(shell: AppShellState): CancelEditResult {
   clearSaveRecordDraft();
+  shell.selectRecord(null);
   shell.navigateToSurface('short-operations');
   return {
     discarded: true,

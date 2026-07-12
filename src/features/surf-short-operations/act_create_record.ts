@@ -37,6 +37,9 @@ export function actCreateRecord(
   }
 
   // No input – navigate to editor so user fills the form.
+  // Clear any previously selected record so the editor does not open
+  // with the previously selected task's values prefilled.
+  shell.selectRecord(null);
   shell.navigateToSurface('short-editor');
   return {
     navigatedTo: 'short-editor',
