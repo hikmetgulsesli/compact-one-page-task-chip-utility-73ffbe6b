@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Short Operations - Compact One Page Task Chip Utility</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=Geist+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-tertiary-container": "#ffede6",
+                      "outline": "#737686",
+                      "on-primary-container": "#eeefff",
+                      "on-tertiary-fixed-variant": "#7d2d00",
+                      "surface-dim": "#d8dadc",
+                      "surface-variant": "#e0e3e5",
+                      "primary": "#004ac6",
+                      "primary-fixed-dim": "#b4c5ff",
+                      "tertiary-fixed-dim": "#ffb596",
+                      "surface-container-lowest": "#ffffff",
+                      "background": "#f7f9fb",
+                      "on-primary-fixed-variant": "#003ea8",
+                      "on-error": "#ffffff",
+                      "surface-container": "#eceef0",
+                      "on-secondary": "#ffffff",
+                      "tertiary": "#943700",
+                      "inverse-on-surface": "#eff1f3",
+                      "secondary": "#515f74",
+                      "on-tertiary-fixed": "#360f00",
+                      "tertiary-fixed": "#ffdbcd",
+                      "secondary-fixed": "#d5e3fc",
+                      "surface-container-high": "#e6e8ea",
+                      "primary-container": "#2563eb",
+                      "outline-variant": "#c3c6d7",
+                      "on-secondary-fixed": "#0d1c2e",
+                      "on-tertiary": "#ffffff",
+                      "inverse-surface": "#2d3133",
+                      "on-primary-fixed": "#00174b",
+                      "on-surface": "#191c1e",
+                      "on-surface-variant": "#434655",
+                      "error-container": "#ffdad6",
+                      "tertiary-container": "#bc4800",
+                      "secondary-fixed-dim": "#b9c7df",
+                      "on-primary": "#ffffff",
+                      "on-secondary-container": "#57657a",
+                      "surface-container-highest": "#e0e3e5",
+                      "surface-container-low": "#f2f4f6",
+                      "on-error-container": "#93000a",
+                      "primary-fixed": "#dbe1ff",
+                      "on-background": "#191c1e",
+                      "secondary-container": "#d5e3fc",
+                      "surface-tint": "#0053db",
+                      "error": "#ba1a1a",
+                      "inverse-primary": "#b4c5ff",
+                      "surface-bright": "#f7f9fb",
+                      "on-secondary-fixed-variant": "#3a485b",
+                      "surface": "#f7f9fb"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "sm": "8px",
+                      "lg": "16px",
+                      "xs": "4px",
+                      "container-padding": "16px",
+                      "gutter": "12px",
+                      "md": "12px",
+                      "unit": "4px"
+              },
+              "fontFamily": {
+                      "body-sm": [
+                              "Inter"
+                      ],
+                      "label-caps": [
+                              "Inter"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "heading-sm": [
+                              "Inter"
+                      ],
+                      "mono-label": [
+                              "Geist Mono"
+                      ]
+              },
+              "fontSize": {
+                      "body-sm": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0em",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-caps": [
+                              "10px",
+                              {
+                                      "lineHeight": "12px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-md": [
+                              "13px",
+                              {
+                                      "lineHeight": "18px",
+                                      "letterSpacing": "0em",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "heading-sm": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "mono-label": [
+                              "11px",
+                              {
+                                      "lineHeight": "14px",
+                                      "letterSpacing": "0em",
+                                      "fontWeight": "500"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .icon-fill {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Hide scrollbar for compact feel but allow scroll */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+      </style>
+</head>
+<body class="bg-surface text-on-surface font-body-sm text-body-sm h-screen overflow-hidden flex flex-col antialiased">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center w-full px-lg h-12 bg-surface dark:bg-background z-40 border-b border-outline-variant dark:border-outline full-width top-0 sticky">
+<div class="flex items-center gap-sm">
+<span class="font-heading-sm text-heading-sm font-black text-on-surface dark:text-on-primary-fixed">TaskChip Utility</span>
+</div>
+<div class="flex items-center gap-md">
+<!-- Search Bar (on_left configuration) -->
+<div class="relative hidden sm:block w-64">
+<span class="material-symbols-outlined absolute left-2 top-1/2 -translate-y-1/2 text-outline text-[16px]">search</span>
+<input class="w-full h-[28px] pl-7 pr-2 bg-surface-container-low border border-outline-variant rounded text-on-surface font-body-sm text-body-sm focus:border-primary focus:ring-2 focus:ring-primary-fixed-dim focus:outline-none transition-all placeholder:text-outline" data-action="ACT_SEARCH_RECORDS" placeholder="Search operations..." type="text"/>
+</div>
+<!-- Trailing Icon Actions -->
+<button class="w-8 h-8 flex items-center justify-center rounded hover:bg-surface-container transition-colors text-on-surface-variant hover:text-primary duration-150 ease-in-out">
+<span class="material-symbols-outlined text-[20px]" data-icon="notifications">notifications</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center rounded hover:bg-surface-container transition-colors text-on-surface-variant hover:text-primary duration-150 ease-in-out">
+<span class="material-symbols-outlined text-[20px]" data-icon="help_outline">help_outline</span>
+</button>
+<!-- Trailing Primary Action -->
+<button class="h-[28px] px-sm bg-primary text-on-primary rounded font-body-md text-body-md hover:bg-primary-container transition-colors shadow-sm flex items-center gap-xs" data-action="ACT_CREATE_RECORD">
+<span class="material-symbols-outlined text-[16px]">add</span>
+                New Task
+            </button>
+<!-- Mobile Menu Toggle (Visible only md:hidden) -->
+<button class="md:hidden w-8 h-8 flex items-center justify-center rounded hover:bg-surface-container text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]">menu</span>
+</button>
+</div>
+</header>
+<div class="flex flex-1 overflow-hidden relative">
+<!-- SideNavBar (Hidden on mobile) -->
+<nav class="hidden md:flex bg-surface-container-low dark:bg-surface-container-lowest font-body-md text-body-md h-screen w-64 border-r border-outline-variant flex-col h-full py-lg px-md z-30 flex-shrink-0">
+<div class="flex items-center gap-sm mb-lg px-xs">
+<div class="w-8 h-8 rounded bg-primary-container text-on-primary-container flex items-center justify-center font-bold">
+<span class="material-symbols-outlined text-[18px]">person</span>
+</div>
+<div>
+<div class="font-heading-sm text-heading-sm font-bold text-primary dark:text-primary-fixed-dim">TaskChip</div>
+<div class="text-outline text-[11px] font-mono-label text-mono-label">Utility v1.0</div>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto no-scrollbar space-y-1">
+<!-- Tabs -->
+<!-- Active: Operations -->
+<a class="flex items-center gap-sm px-sm py-[6px] rounded text-primary dark:text-primary-fixed-dim font-bold border-r-2 border-primary bg-surface-container cursor-pointer active:opacity-80 transition-opacity" href="#">
+<span class="material-symbols-outlined text-[18px] icon-fill" data-icon="dashboard">dashboard</span>
+                    Operations
+                </a>
+<!-- Inactive Tabs -->
+<a class="flex items-center gap-sm px-sm py-[6px] rounded text-on-surface-variant dark:text-outline hover:text-on-surface hover:bg-surface-container dark:hover:bg-surface-variant transition-colors cursor-pointer active:opacity-80 transition-opacity" href="#">
+<span class="material-symbols-outlined text-[18px]" data-icon="edit_note">edit_note</span>
+                    Editor
+                </a>
+<a class="flex items-center gap-sm px-sm py-[6px] rounded text-on-surface-variant dark:text-outline hover:text-on-surface hover:bg-surface-container dark:hover:bg-surface-variant transition-colors cursor-pointer active:opacity-80 transition-opacity" href="#">
+<span class="material-symbols-outlined text-[18px]" data-icon="settings">settings</span>
+                    Settings
+                </a>
+<a class="flex items-center gap-sm px-sm py-[6px] rounded text-on-surface-variant dark:text-outline hover:text-on-surface hover:bg-surface-container dark:hover:bg-surface-variant transition-colors cursor-pointer active:opacity-80 transition-opacity" href="#">
+<span class="material-symbols-outlined text-[18px]" data-icon="history">history</span>
+                    Recovery
+                </a>
+</div>
+<div class="mt-auto pt-sm border-t border-outline-variant flex flex-col gap-sm">
+<!-- CTA -->
+<button class="w-full h-[32px] bg-white border border-slate-200 text-slate-900 rounded font-body-md text-body-md hover:bg-slate-50 transition-colors shadow-sm flex items-center justify-center gap-xs">
+<span class="material-symbols-outlined text-[16px]">download</span>
+                    Export JSON
+                </button>
+<!-- Footer Tabs -->
+<button class="w-full flex items-center gap-sm px-sm py-[6px] rounded text-error hover:bg-error-container transition-colors cursor-pointer active:opacity-80 transition-opacity">
+<span class="material-symbols-outlined text-[18px]" data-icon="delete_sweep">delete_sweep</span>
+                    Clear Cache
+                </button>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col overflow-hidden bg-background">
+<!-- Contextual Action Banner (Retry Load) -->
+<div class="bg-surface-container-high border-b border-outline-variant px-md py-xs flex justify-between items-center text-on-surface-variant">
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-[14px] text-error">warning</span>
+<span class="font-body-sm text-body-sm text-error">Data sync delayed.</span>
+</div>
+<button class="font-label-caps text-label-caps text-primary hover:text-primary-container uppercase" data-action="ACT_RETRY_LOAD">Retry Load</button>
+</div>
+<!-- Page Header & Metrics -->
+<div class="px-md py-sm flex flex-col gap-sm border-b border-outline-variant bg-surface">
+<div class="flex justify-between items-end">
+<div>
+<h1 class="font-heading-sm text-heading-sm font-bold text-on-surface">Short Operations</h1>
+<p class="font-mono-label text-mono-label text-outline">Utility / Active Queue</p>
+</div>
+<!-- Status Filters -->
+<div class="flex gap-xs bg-surface-container-low p-[2px] rounded border border-outline-variant">
+<button class="px-sm py-xs text-primary font-body-sm text-body-sm font-bold bg-white rounded shadow-sm">All</button>
+<button class="px-sm py-xs text-on-surface-variant hover:text-on-surface font-body-sm text-body-sm rounded">Active</button>
+<button class="px-sm py-xs text-on-surface-variant hover:text-on-surface font-body-sm text-body-sm rounded">Done</button>
+</div>
+</div>
+<!-- Summary Metrics Bar -->
+<div class="flex gap-sm mt-xs">
+<div class="flex-1 bg-white border border-outline-variant rounded p-sm flex items-center justify-between">
+<span class="font-label-caps text-label-caps text-outline uppercase">Active Tasks</span>
+<span class="font-mono-label text-mono-label text-on-surface font-bold">14</span>
+</div>
+<div class="flex-1 bg-white border border-outline-variant rounded p-sm flex items-center justify-between">
+<span class="font-label-caps text-label-caps text-outline uppercase">Done Today</span>
+<span class="font-mono-label text-mono-label text-primary font-bold">8</span>
+</div>
+<div class="flex-1 bg-white border border-outline-variant rounded p-sm flex items-center justify-between">
+<span class="font-label-caps text-label-caps text-outline uppercase">Archived</span>
+<span class="font-mono-label text-mono-label text-outline font-bold">1,024</span>
+</div>
+</div>
+</div>
+<!-- Data Area Split (List + Preview) -->
+<div class="flex-1 flex overflow-hidden">
+<!-- Task List Area -->
+<div class="flex-1 overflow-y-auto no-scrollbar border-r border-outline-variant bg-white">
+<!-- Table Header -->
+<div class="sticky top-0 bg-surface-container-lowest border-b border-outline-variant flex px-md py-[6px] z-10 text-outline font-label-caps text-label-caps uppercase">
+<div class="w-8"></div>
+<div class="flex-1">Task ID &amp; Title</div>
+<div class="w-24">Status</div>
+<div class="w-32 text-right">Last Activity</div>
+</div>
+<!-- List Items -->
+<!-- Active Selected Item -->
+<div class="flex items-center px-md py-[8px] border-b border-outline-variant hover:bg-slate-50 cursor-pointer bg-primary-fixed-dim/20 transition-colors" data-action="ACT_SELECT_RECORD">
+<div class="w-8 flex justify-center">
+<div class="w-[6px] h-[6px] rounded-full bg-blue-600"></div>
+</div>
+<div class="flex-1 flex flex-col">
+<span class="font-mono-label text-mono-label text-primary">TSK-8821</span>
+<span class="font-body-sm text-body-sm text-on-surface font-bold">Optimize Search Index Payload</span>
+</div>
+<div class="w-24 flex items-center">
+<span class="inline-flex items-center gap-[4px] px-[6px] py-[2px] bg-slate-100 border border-slate-200 rounded text-[10px] font-mono-label text-slate-700">
+<span class="material-symbols-outlined text-[10px]">sync</span>
+                                In Progress
+                            </span>
+</div>
+<div class="w-32 text-right font-mono-label text-mono-label text-outline">
+                            2m ago
+                        </div>
+</div>
+<!-- Inactive Items -->
+<div class="flex items-center px-md py-[8px] border-b border-outline-variant hover:bg-slate-50 cursor-pointer transition-colors" data-action="ACT_SELECT_RECORD">
+<div class="w-8 flex justify-center">
+<div class="w-[6px] h-[6px] rounded-full bg-blue-600"></div>
+</div>
+<div class="flex-1 flex flex-col">
+<span class="font-mono-label text-mono-label text-outline">TSK-8820</span>
+<span class="font-body-sm text-body-sm text-on-surface">Update Dependencies (Q3)</span>
+</div>
+<div class="w-24 flex items-center">
+<span class="inline-flex items-center gap-[4px] px-[6px] py-[2px] bg-slate-100 border border-slate-200 rounded text-[10px] font-mono-label text-slate-700">
+<span class="material-symbols-outlined text-[10px]">pending</span>
+                                Pending
+                            </span>
+</div>
+<div class="w-32 text-right font-mono-label text-mono-label text-outline">
+                            15m ago
+                        </div>
+</div>
+<div class="flex items-center px-md py-[8px] border-b border-outline-variant hover:bg-slate-50 cursor-pointer transition-colors" data-action="ACT_SELECT_RECORD">
+<div class="w-8 flex justify-center">
+<div class="w-[6px] h-[6px] rounded-full bg-green-500"></div>
+</div>
+<div class="flex-1 flex flex-col">
+<span class="font-mono-label text-mono-label text-outline">TSK-8819</span>
+<span class="font-body-sm text-body-sm text-on-surface text-slate-500 line-through">Deploy Cache Worker v2</span>
+</div>
+<div class="w-24 flex items-center">
+<span class="inline-flex items-center gap-[4px] px-[6px] py-[2px] bg-slate-100 border border-slate-200 rounded text-[10px] font-mono-label text-slate-700">
+<span class="material-symbols-outlined text-[10px]">check</span>
+                                Done
+                            </span>
+</div>
+<div class="w-32 text-right font-mono-label text-mono-label text-outline">
+                            1h ago
+                        </div>
+</div>
+<div class="flex items-center px-md py-[8px] border-b border-outline-variant hover:bg-slate-50 cursor-pointer transition-colors" data-action="ACT_SELECT_RECORD">
+<div class="w-8 flex justify-center">
+<div class="w-[6px] h-[6px] rounded-full bg-red-500"></div>
+</div>
+<div class="flex-1 flex flex-col">
+<span class="font-mono-label text-mono-label text-outline">TSK-8818</span>
+<span class="font-body-sm text-body-sm text-on-surface">Investigate Memory Leak #442</span>
+</div>
+<div class="w-24 flex items-center">
+<span class="inline-flex items-center gap-[4px] px-[6px] py-[2px] bg-red-50 border border-red-200 rounded text-[10px] font-mono-label text-red-700">
+<span class="material-symbols-outlined text-[10px]">error</span>
+                                Blocked
+                            </span>
+</div>
+<div class="w-32 text-right font-mono-label text-mono-label text-outline">
+                            3h ago
+                        </div>
+</div>
+<!-- Load More... -->
+<div class="px-md py-[8px] text-center">
+<span class="font-mono-label text-mono-label text-primary hover:underline cursor-pointer">Load more records...</span>
+</div>
+</div>
+<!-- Preview Panel (Bento/Glassmorphism feel but professional) -->
+<div class="w-[320px] bg-surface-container-lowest hidden lg:flex flex-col overflow-y-auto no-scrollbar relative shadow-[-4px_0_12px_rgba(0,0,0,0.02)]">
+<div class="p-md border-b border-outline-variant flex justify-between items-center sticky top-0 bg-surface-container-lowest/90 backdrop-blur z-10">
+<span class="font-mono-label text-mono-label text-primary">TSK-8821</span>
+<button class="h-[24px] px-[8px] bg-white border border-slate-200 text-slate-900 rounded font-body-sm text-body-sm hover:bg-slate-50 transition-colors shadow-sm flex items-center gap-[4px]">
+<span class="material-symbols-outlined text-[14px]">edit</span>
+                            Edit
+                        </button>
+</div>
+<div class="p-md flex flex-col gap-md">
+<div>
+<h2 class="font-heading-sm text-heading-sm font-bold text-on-surface mb-xs">Optimize Search Index Payload</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">The current payload size for the search index update is causing latency spikes during peak hours. Need to chunk the updates or implement differential sync.</p>
+</div>
+<!-- Metadata Bento Grid -->
+<div class="grid grid-cols-2 gap-[8px]">
+<div class="bg-surface p-[8px] rounded border border-outline-variant flex flex-col gap-[2px]">
+<span class="font-label-caps text-label-caps text-outline uppercase">Assignee</span>
+<div class="flex items-center gap-[4px]">
+<div class="w-[16px] h-[16px] rounded-full bg-secondary flex items-center justify-center text-white text-[8px] font-bold">A</div>
+<span class="font-body-sm text-body-sm text-on-surface">Alex M.</span>
+</div>
+</div>
+<div class="bg-surface p-[8px] rounded border border-outline-variant flex flex-col gap-[2px]">
+<span class="font-label-caps text-label-caps text-outline uppercase">Priority</span>
+<span class="font-body-sm text-body-sm text-on-surface font-bold text-orange-600">High</span>
+</div>
+<div class="bg-surface p-[8px] rounded border border-outline-variant flex flex-col gap-[2px]">
+<span class="font-label-caps text-label-caps text-outline uppercase">Created</span>
+<span class="font-mono-label text-mono-label text-on-surface">2023-10-27</span>
+</div>
+<div class="bg-surface p-[8px] rounded border border-outline-variant flex flex-col gap-[2px]">
+<span class="font-label-caps text-label-caps text-outline uppercase">Environment</span>
+<span class="font-mono-label text-mono-label text-on-surface">Production</span>
+</div>
+</div>
+<!-- Quick Inputs -->
+<div class="flex flex-col gap-[8px] mt-xs">
+<label class="flex flex-col gap-[2px]">
+<span class="font-label-caps text-label-caps text-outline uppercase">Quick Note</span>
+<input class="w-full h-[28px] px-[8px] bg-white border border-slate-300 rounded text-on-surface font-body-sm text-body-sm focus:border-primary focus:ring-2 focus:ring-primary-100 focus:outline-none transition-all placeholder:text-outline" placeholder="Add a status update..." type="text"/>
+</label>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

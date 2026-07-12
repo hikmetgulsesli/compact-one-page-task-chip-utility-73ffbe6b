@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Empty and Error Recovery - Compact One Page Task Chip Utility</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Geist+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-container": "#ffede6",
+                    "outline": "#737686",
+                    "on-primary-container": "#eeefff",
+                    "on-tertiary-fixed-variant": "#7d2d00",
+                    "surface-dim": "#d8dadc",
+                    "surface-variant": "#e0e3e5",
+                    "primary": "#004ac6",
+                    "primary-fixed-dim": "#b4c5ff",
+                    "tertiary-fixed-dim": "#ffb596",
+                    "surface-container-lowest": "#ffffff",
+                    "background": "#f7f9fb",
+                    "on-primary-fixed-variant": "#003ea8",
+                    "on-error": "#ffffff",
+                    "surface-container": "#eceef0",
+                    "on-secondary": "#ffffff",
+                    "tertiary": "#943700",
+                    "inverse-on-surface": "#eff1f3",
+                    "secondary": "#515f74",
+                    "on-tertiary-fixed": "#360f00",
+                    "tertiary-fixed": "#ffdbcd",
+                    "secondary-fixed": "#d5e3fc",
+                    "surface-container-high": "#e6e8ea",
+                    "primary-container": "#2563eb",
+                    "outline-variant": "#c3c6d7",
+                    "on-secondary-fixed": "#0d1c2e",
+                    "on-tertiary": "#ffffff",
+                    "inverse-surface": "#2d3133",
+                    "on-primary-fixed": "#00174b",
+                    "on-surface": "#191c1e",
+                    "on-surface-variant": "#434655",
+                    "error-container": "#ffdad6",
+                    "tertiary-container": "#bc4800",
+                    "secondary-fixed-dim": "#b9c7df",
+                    "on-primary": "#ffffff",
+                    "on-secondary-container": "#57657a",
+                    "surface-container-highest": "#e0e3e5",
+                    "surface-container-low": "#f2f4f6",
+                    "on-error-container": "#93000a",
+                    "primary-fixed": "#dbe1ff",
+                    "on-background": "#191c1e",
+                    "secondary-container": "#d5e3fc",
+                    "surface-tint": "#0053db",
+                    "error": "#ba1a1a",
+                    "inverse-primary": "#b4c5ff",
+                    "surface-bright": "#f7f9fb",
+                    "on-secondary-fixed-variant": "#3a485b",
+                    "surface": "#f7f9fb"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "sm": "8px",
+                    "lg": "16px",
+                    "xs": "4px",
+                    "container-padding": "16px",
+                    "gutter": "12px",
+                    "md": "12px",
+                    "unit": "4px"
+            },
+            "fontFamily": {
+                    "body-sm": ["Inter"],
+                    "label-caps": ["Inter"],
+                    "body-md": ["Inter"],
+                    "heading-sm": ["Inter"],
+                    "mono-label": ["Geist Mono"]
+            },
+            "fontSize": {
+                    "body-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0em", "fontWeight": "400"}],
+                    "label-caps": ["10px", {"lineHeight": "12px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                    "body-md": ["13px", {"lineHeight": "18px", "letterSpacing": "0em", "fontWeight": "400"}],
+                    "heading-sm": ["14px", {"lineHeight": "20px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "mono-label": ["11px", {"lineHeight": "14px", "letterSpacing": "0em", "fontWeight": "500"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+        }
+        /* Custom scrollbar for dense feeling */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #c3c6d7; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #737686; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md text-body-md antialiased overflow-hidden flex h-screen">
+<!-- SideNavBar (from JSON) -->
+<aside class="bg-surface-container-low h-screen w-64 border-r border-outline-variant flex flex-col py-lg px-md shrink-0 z-50">
+<!-- Header -->
+<div class="mb-lg px-sm">
+<h1 class="font-heading-sm text-heading-sm font-bold text-primary">TaskChip</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Utility v1.0</p>
+</div>
+<!-- Navigation Tabs -->
+<nav class="flex-1 flex flex-col gap-xs font-body-md text-body-md">
+<!-- Inactive Tab: Operations -->
+<a class="flex items-center gap-sm px-md py-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors cursor-pointer active:opacity-80 transition-opacity" href="#">
+<span class="material-symbols-outlined text-[18px]">dashboard</span>
+                Operations
+            </a>
+<!-- Inactive Tab: Editor -->
+<a class="flex items-center gap-sm px-md py-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors cursor-pointer active:opacity-80 transition-opacity" href="#">
+<span class="material-symbols-outlined text-[18px]">edit_note</span>
+                Editor
+            </a>
+<!-- Inactive Tab: Settings -->
+<a class="flex items-center gap-sm px-md py-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors cursor-pointer active:opacity-80 transition-opacity" href="#">
+<span class="material-symbols-outlined text-[18px]">settings</span>
+                Settings
+            </a>
+<!-- Active Tab: Recovery -->
+<a class="flex items-center justify-between pl-md pr-sm py-sm rounded-l-lg text-primary font-bold border-r-2 border-primary bg-surface-container cursor-pointer active:opacity-80 transition-opacity" href="#">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">history</span>
+                    Recovery
+                </div>
+</a>
+</nav>
+<!-- CTA -->
+<div class="mt-auto pt-lg border-t border-outline-variant/50">
+<button class="w-full bg-primary text-on-primary font-body-md text-body-md h-[32px] rounded flex items-center justify-center gap-sm hover:bg-primary-container transition-colors shadow-sm">
+                Export JSON
+            </button>
+</div>
+<!-- Footer Tab -->
+<div class="mt-sm">
+<a class="flex items-center gap-sm px-md py-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors cursor-pointer active:opacity-80 transition-opacity" href="#">
+<span class="material-symbols-outlined text-[18px]">delete_sweep</span>
+                Clear Cache
+            </a>
+</div>
+</aside>
+<!-- Main Workspace -->
+<main class="flex-1 flex flex-col h-screen min-w-0 bg-background">
+<!-- TopAppBar (from JSON) -->
+<header class="bg-surface top-0 sticky border-b border-outline-variant flex justify-between items-center w-full px-lg h-12 z-40 shrink-0">
+<!-- Left Area / Search -->
+<div class="flex items-center gap-md flex-1">
+<span class="font-heading-sm text-heading-sm font-black text-on-surface">TaskChip Utility</span>
+<div class="h-4 w-px bg-outline-variant mx-sm"></div>
+<div class="relative w-64 group">
+<span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-[16px] text-outline group-focus-within:text-primary transition-colors">search</span>
+<input class="w-full pl-8 pr-sm py-1 bg-surface-container-lowest border border-outline-variant rounded font-body-sm text-body-sm text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary-fixed-dim transition-all placeholder:text-outline h-[28px]" placeholder="Search tasks..." type="text"/>
+</div>
+</div>
+<!-- Right Area / Actions -->
+<div class="flex items-center gap-md">
+<button class="text-on-surface-variant hover:text-primary transition-colors cursor-pointer active:opacity-80 duration-150 ease-in-out flex items-center justify-center h-8 w-8 rounded hover:bg-surface-container-low">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors cursor-pointer active:opacity-80 duration-150 ease-in-out flex items-center justify-center h-8 w-8 rounded hover:bg-surface-container-low">
+<span class="material-symbols-outlined text-[20px]">help_outline</span>
+</button>
+<div class="h-4 w-px bg-outline-variant mx-xs"></div>
+<button class="bg-primary text-on-primary font-body-sm text-body-sm px-md h-[28px] rounded hover:bg-primary-container transition-colors shadow-sm ml-xs font-medium">
+                    New Task
+                </button>
+</div>
+</header>
+<!-- Canvas Area -->
+<div class="flex-1 overflow-y-auto p-gutter relative">
+<!-- Page Header (Contextual) -->
+<div class="mb-gutter flex items-end justify-between">
+<div>
+<h2 class="font-heading-sm text-heading-sm font-bold text-on-surface">Recovery Console</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-xs">System diagnostics and state resolution utility.</p>
+</div>
+<div class="flex items-center gap-sm">
+<span class="inline-flex items-center gap-xs px-2 py-1 rounded bg-surface-container border border-outline-variant font-mono-label text-mono-label text-on-surface-variant">
+<span class="h-1.5 w-1.5 rounded-full bg-outline"></span> Disconnected
+                    </span>
+</div>
+</div>
+<!-- Bento Grid Layout for States -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-start auto-rows-min">
+<!-- 1. Error State Panel (Critical Priority - Spans 8 cols) -->
+<section class="lg:col-span-8 bg-surface-container-lowest border border-outline-variant rounded relative overflow-hidden group">
+<!-- Feedback Toast Left Bar -->
+<div class="absolute left-0 top-0 bottom-0 w-[3px] bg-error"></div>
+<div class="p-lg pl-[20px]">
+<div class="flex items-start gap-md">
+<div class="flex-shrink-0 h-8 w-8 rounded bg-error-container flex items-center justify-center text-error mt-xs">
+<span class="material-symbols-outlined text-[20px]">warning</span>
+</div>
+<div class="flex-1">
+<h3 class="font-heading-sm text-heading-sm font-bold text-on-surface mb-xs">Data Store Synchronization Failure</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-md">
+                                    The application cannot read from or write to the local database. This is typically caused by insufficient storage quota or strict privacy settings blocking `localStorage` access.
+                                </p>
+<!-- Technical Details Box -->
+<div class="bg-surface p-sm rounded border border-outline-variant mb-md">
+<div class="flex justify-between items-center border-b border-outline-variant pb-xs mb-xs">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">Exception Trace</span>
+<span class="font-mono-label text-mono-label text-error">DOMException: QuotaExceededError</span>
+</div>
+<code class="font-mono-label text-mono-label text-on-surface block truncate">
+                                        at TaskStore.commit (storage.js:142)<br/>
+                                        at syncQueue.flush (queue.js:88)
+                                    </code>
+</div>
+<div class="flex items-center gap-sm mt-md">
+<button class="bg-primary text-on-primary font-body-sm text-body-sm px-md h-[32px] rounded hover:bg-primary-container transition-colors shadow-sm font-medium flex items-center gap-xs">
+<span class="material-symbols-outlined text-[16px]">sync</span>
+                                        Retry Connection
+                                    </button>
+<button class="bg-surface-container-lowest text-on-surface border border-outline-variant font-body-sm text-body-sm px-md h-[32px] rounded hover:bg-surface-container-low transition-colors font-medium">
+                                        View Documentation
+                                    </button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 2. Zero State Panel (Filters - Spans 4 cols) -->
+<section class="lg:col-span-4 bg-surface-container-lowest border border-outline-variant rounded flex flex-col h-full min-h-[200px]">
+<div class="p-sm border-b border-outline-variant flex items-center gap-xs bg-surface-container-low/50">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">filter_list_off</span>
+<h3 class="font-heading-sm text-heading-sm font-medium text-on-surface">Filter Results</h3>
+</div>
+<div class="flex-1 flex flex-col items-center justify-center p-lg text-center">
+<div class="h-10 w-10 rounded-full bg-surface-container flex items-center justify-center mb-md text-outline">
+<span class="material-symbols-outlined text-[24px]">search_off</span>
+</div>
+<h4 class="font-heading-sm text-heading-sm font-medium text-on-surface mb-xs">No records match criteria</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-md max-w-[200px]">
+                            Adjust your query or clear current filters to see available tasks.
+                        </p>
+<button class="bg-surface-container-lowest text-on-surface border border-outline-variant font-body-sm text-body-sm px-md h-[28px] rounded hover:bg-surface-container-low transition-colors font-medium flex items-center gap-xs">
+<span class="material-symbols-outlined text-[14px]">clear</span>
+                            Clear All Filters
+                        </button>
+</div>
+</section>
+<!-- 3. Empty State Panel (Spans Full Width below) -->
+<section class="lg:col-span-12 bg-surface border border-outline-variant border-dashed rounded relative overflow-hidden flex flex-col items-center justify-center py-[64px] px-lg mt-gutter">
+<!-- Subtle background pattern for visual interest without distraction -->
+<div class="absolute inset-0 opacity-[0.03] pointer-events-none" style="background-image: radial-gradient(#191c1e 1px, transparent 1px); background-size: 16px 16px;"></div>
+<div class="relative z-10 flex flex-col items-center text-center max-w-[400px]">
+<div class="h-16 w-16 rounded bg-surface-container border border-outline-variant flex items-center justify-center mb-md text-outline shadow-sm relative">
+<span class="material-symbols-outlined text-[32px]">assignment_add</span>
+<!-- Decorative element -->
+<div class="absolute -right-2 -top-2 h-6 w-6 rounded-full bg-surface border border-outline-variant flex items-center justify-center">
+<span class="h-2 w-2 rounded-full bg-primary animate-pulse"></span>
+</div>
+</div>
+<h3 class="font-heading-sm text-heading-sm font-bold text-on-surface mb-xs">Workspace Initialization Required</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-lg leading-relaxed">
+                            The local repository contains zero functional nodes. To begin orchestration, establish the primary operational sequence by creating the first task entity.
+                        </p>
+<button class="bg-primary text-on-primary font-body-md text-body-md px-lg h-[32px] rounded hover:bg-primary-container transition-colors shadow-sm font-medium flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                            Create First Task
+                        </button>
+<div class="mt-md font-body-sm text-body-sm text-outline flex items-center gap-xs">
+<span>or</span>
+<a class="text-primary hover:underline underline-offset-2" href="#">import from JSON template</a>
+</div>
+</div>
+</section>
+</div>
+</div>
+</main>
+</body></html>
