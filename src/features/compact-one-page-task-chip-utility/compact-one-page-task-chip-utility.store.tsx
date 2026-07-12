@@ -87,8 +87,13 @@ export function AppShellProvider({
   // Persist on every task mutation. We use a ref so that consumers calling
   // mutation handlers during render still trigger a save on the next tick.
   const tasksRef = useRef<TaskRecord[]>(tasks);
+  const isFirstRender = useRef(true);
   useEffect(() => {
     tasksRef.current = tasks;
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
     const ok = saveTasks(tasks);
     if (!ok && storageStatus !== 'corrupted') {
       setStorageStatus('empty');
@@ -133,11 +138,11 @@ export function AppShellProvider({
   }, []);
 
   const updateTask = useCallback<AppShellState['updateTask']>((id, patch) => {
-    let changed = false;
+    const exists = tasksRef.current.some((task) => task.id === id);
+    if (!exists) return false;
     setTasks((prev) =>
       prev.map((task) => {
         if (task.id !== id) return task;
-        changed = true;
         return {
           ...task,
           ...(patch.title !== undefined ? { title: patch.title } : {}),
@@ -147,22 +152,17 @@ export function AppShellProvider({
         };
       }),
     );
-    if (changed) setLastError(null);
-    return changed;
+    setLastError(null);
+    return true;
   }, []);
 
   const deleteTask = useCallback<AppShellState['deleteTask']>((id) => {
-    let removed = false;
-    setTasks((prev) => {
-      const next = prev.filter((task) => task.id !== id);
-      removed = next.length !== prev.length;
-      return next;
-    });
-    if (removed) {
-      setSelectedRecordId((current) => (current === id ? null : current));
-      setLastError(null);
-    }
-    return removed;
+    const exists = tasksRef.current.some((task) => task.id === id);
+    if (!exists) return false;
+    setTasks((prev) => prev.filter((task) => task.id !== id));
+    setSelectedRecordId((current) => (current === id ? null : current));
+    setLastError(null);
+    return true;
   }, []);
 
   const setTaskStatus = useCallback<AppShellState['setTaskStatus']>((id, status) => {
