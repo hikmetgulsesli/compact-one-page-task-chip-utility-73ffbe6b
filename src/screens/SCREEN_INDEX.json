@@ -1,0 +1,420 @@
+[
+  {
+    "screenId": "089a970e6aa24d849748cdbd2c88a86d",
+    "title": "Short Editor - Compact One Page Task Chip Utility",
+    "componentName": "ShortEditorCompactOnePageTaskChipUtility",
+    "file": "src/screens/ShortEditorCompactOnePageTaskChipUtility.tsx",
+    "buttons": 7,
+    "inputs": 4,
+    "links": 5,
+    "actions": [
+      {
+        "id": "export-json-1",
+        "kind": "button",
+        "label": "Export JSON",
+        "index": 0
+      },
+      {
+        "id": "menu-2",
+        "kind": "button",
+        "label": "Menu",
+        "index": 1
+      },
+      {
+        "id": "notifications-3",
+        "kind": "button",
+        "label": "Notifications",
+        "index": 2
+      },
+      {
+        "id": "help-outline-4",
+        "kind": "button",
+        "label": "Help Outline",
+        "index": 3
+      },
+      {
+        "id": "new-task-5",
+        "kind": "button",
+        "label": "New Task",
+        "index": 4
+      },
+      {
+        "id": "cancel-6",
+        "kind": "button",
+        "label": "Cancel",
+        "index": 5
+      },
+      {
+        "id": "save-task-7",
+        "kind": "button",
+        "label": "Save Task",
+        "index": 6
+      },
+      {
+        "id": "operations-1",
+        "kind": "link",
+        "label": "Operations",
+        "href": "#",
+        "index": 0
+      },
+      {
+        "id": "editor-2",
+        "kind": "link",
+        "label": "Editor",
+        "href": "#",
+        "index": 1
+      },
+      {
+        "id": "settings-3",
+        "kind": "link",
+        "label": "Settings",
+        "href": "#",
+        "index": 2
+      },
+      {
+        "id": "recovery-4",
+        "kind": "link",
+        "label": "Recovery",
+        "href": "#",
+        "index": 3
+      },
+      {
+        "id": "clear-cache-5",
+        "kind": "link",
+        "label": "Clear Cache",
+        "href": "#",
+        "index": 4
+      }
+    ]
+  },
+  {
+    "screenId": "726f990d21994447ac2ced69da8c0345",
+    "title": "Empty and Error Recovery - Compact One Page Task Chip Utility",
+    "componentName": "EmptyAndErrorRecoveryCompactOnePageTaskChipUtility",
+    "file": "src/screens/EmptyAndErrorRecoveryCompactOnePageTaskChipUtility.tsx",
+    "buttons": 8,
+    "inputs": 1,
+    "links": 6,
+    "actions": [
+      {
+        "id": "export-json-1",
+        "kind": "button",
+        "label": "Export JSON",
+        "index": 0
+      },
+      {
+        "id": "notifications-2",
+        "kind": "button",
+        "label": "Notifications",
+        "index": 1
+      },
+      {
+        "id": "help-outline-3",
+        "kind": "button",
+        "label": "Help Outline",
+        "index": 2
+      },
+      {
+        "id": "new-task-4",
+        "kind": "button",
+        "label": "New Task",
+        "index": 3
+      },
+      {
+        "id": "retry-connection-5",
+        "kind": "button",
+        "label": "Retry Connection",
+        "index": 4
+      },
+      {
+        "id": "view-documentation-6",
+        "kind": "button",
+        "label": "View Documentation",
+        "index": 5
+      },
+      {
+        "id": "clear-all-filters-7",
+        "kind": "button",
+        "label": "Clear All Filters",
+        "index": 6
+      },
+      {
+        "id": "create-first-task-8",
+        "kind": "button",
+        "label": "Create First Task",
+        "index": 7
+      },
+      {
+        "id": "operations-1",
+        "kind": "link",
+        "label": "Operations",
+        "href": "#",
+        "index": 0
+      },
+      {
+        "id": "editor-2",
+        "kind": "link",
+        "label": "Editor",
+        "href": "#",
+        "index": 1
+      },
+      {
+        "id": "settings-3",
+        "kind": "link",
+        "label": "Settings",
+        "href": "#",
+        "index": 2
+      },
+      {
+        "id": "recovery-4",
+        "kind": "link",
+        "label": "Recovery",
+        "href": "#",
+        "index": 3
+      },
+      {
+        "id": "clear-cache-5",
+        "kind": "link",
+        "label": "Clear Cache",
+        "href": "#",
+        "index": 4
+      },
+      {
+        "id": "import-from-json-template-6",
+        "kind": "link",
+        "label": "import from JSON template",
+        "href": "#",
+        "index": 5
+      }
+    ]
+  },
+  {
+    "screenId": "b1f94c9e917e474bb0c4b9543c7ad513",
+    "title": "Settings and Preferences - Compact One Page Task Chip Utility",
+    "componentName": "SettingsAndPreferencesCompactOnePageTaskChipUtility",
+    "file": "src/screens/SettingsAndPreferencesCompactOnePageTaskChipUtility.tsx",
+    "buttons": 13,
+    "inputs": 6,
+    "links": 5,
+    "actions": [
+      {
+        "id": "export-json-1",
+        "kind": "button",
+        "label": "Export JSON",
+        "index": 0
+      },
+      {
+        "id": "menu-2",
+        "kind": "button",
+        "label": "Menu",
+        "index": 1
+      },
+      {
+        "id": "notifications-3",
+        "kind": "button",
+        "label": "Notifications",
+        "index": 2
+      },
+      {
+        "id": "help-outline-4",
+        "kind": "button",
+        "label": "Help Outline",
+        "index": 3
+      },
+      {
+        "id": "new-task-5",
+        "kind": "button",
+        "label": "New Task",
+        "index": 4
+      },
+      {
+        "id": "import-6",
+        "kind": "button",
+        "label": "Import...",
+        "index": 5
+      },
+      {
+        "id": "close-7",
+        "kind": "button",
+        "label": "Close",
+        "index": 6
+      },
+      {
+        "id": "close-8",
+        "kind": "button",
+        "label": "Close",
+        "index": 7
+      },
+      {
+        "id": "close-9",
+        "kind": "button",
+        "label": "Close",
+        "index": 8
+      },
+      {
+        "id": "new-rule-10",
+        "kind": "button",
+        "label": "New Rule",
+        "index": 9
+      },
+      {
+        "id": "reset-to-defaults-11",
+        "kind": "button",
+        "label": "Reset to Defaults",
+        "index": 10
+      },
+      {
+        "id": "refresh-state-12",
+        "kind": "button",
+        "label": "Refresh State",
+        "index": 11
+      },
+      {
+        "id": "save-preferences-13",
+        "kind": "button",
+        "label": "Save Preferences",
+        "index": 12
+      },
+      {
+        "id": "operations-1",
+        "kind": "link",
+        "label": "Operations",
+        "href": "#",
+        "index": 0
+      },
+      {
+        "id": "editor-2",
+        "kind": "link",
+        "label": "Editor",
+        "href": "#",
+        "index": 1
+      },
+      {
+        "id": "settings-3",
+        "kind": "link",
+        "label": "Settings",
+        "href": "#",
+        "index": 2
+      },
+      {
+        "id": "recovery-4",
+        "kind": "link",
+        "label": "Recovery",
+        "href": "#",
+        "index": 3
+      },
+      {
+        "id": "clear-cache-5",
+        "kind": "link",
+        "label": "Clear Cache",
+        "href": "#",
+        "index": 4
+      }
+    ]
+  },
+  {
+    "screenId": "96bd08203ea345afa178b6bb2aa08cf9",
+    "title": "Short Operations - Compact One Page Task Chip Utility",
+    "componentName": "ShortOperationsCompactOnePageTaskChipUtility",
+    "file": "src/screens/ShortOperationsCompactOnePageTaskChipUtility.tsx",
+    "buttons": 11,
+    "inputs": 2,
+    "links": 4,
+    "actions": [
+      {
+        "id": "notifications-1",
+        "kind": "button",
+        "label": "Notifications",
+        "index": 0
+      },
+      {
+        "id": "help-outline-2",
+        "kind": "button",
+        "label": "Help Outline",
+        "index": 1
+      },
+      {
+        "id": "new-task-3",
+        "kind": "button",
+        "label": "New Task",
+        "index": 2
+      },
+      {
+        "id": "menu-4",
+        "kind": "button",
+        "label": "Menu",
+        "index": 3
+      },
+      {
+        "id": "export-json-5",
+        "kind": "button",
+        "label": "Export JSON",
+        "index": 4
+      },
+      {
+        "id": "clear-cache-6",
+        "kind": "button",
+        "label": "Clear Cache",
+        "index": 5
+      },
+      {
+        "id": "retry-load-7",
+        "kind": "button",
+        "label": "Retry Load",
+        "index": 6
+      },
+      {
+        "id": "all-8",
+        "kind": "button",
+        "label": "All",
+        "index": 7
+      },
+      {
+        "id": "active-9",
+        "kind": "button",
+        "label": "Active",
+        "index": 8
+      },
+      {
+        "id": "done-10",
+        "kind": "button",
+        "label": "Done",
+        "index": 9
+      },
+      {
+        "id": "edit-11",
+        "kind": "button",
+        "label": "Edit",
+        "index": 10
+      },
+      {
+        "id": "operations-1",
+        "kind": "link",
+        "label": "Operations",
+        "href": "#",
+        "index": 0
+      },
+      {
+        "id": "editor-2",
+        "kind": "link",
+        "label": "Editor",
+        "href": "#",
+        "index": 1
+      },
+      {
+        "id": "settings-3",
+        "kind": "link",
+        "label": "Settings",
+        "href": "#",
+        "index": 2
+      },
+      {
+        "id": "recovery-4",
+        "kind": "link",
+        "label": "Recovery",
+        "href": "#",
+        "index": 3
+      }
+    ]
+  }
+]
